@@ -1,0 +1,26 @@
+# dsh-plugin2preset —「把插件创造为一个同名模式」
+#
+# 痛点：像 dsh-rea 这类功能重的插件（带一大套 MCP 工具），只要作为 profile 级 bundle 装进来，
+# 它的工具 schema 就会注入到**每一个会话**——哪怕这次根本用不到它，也白白吃上下文、拖慢首字、抬成本。
+#
+# 解决：把这类插件装成一个「同名模式（agent preset）」，用时才在具备所需能力的会话里选择；
+# 不选它，它的工具就不出现、也不占任何其它会话的上下文。
+#
+# 本 bundle 在「添加插件」流程里加两个入口：
+#   · 插件页 Add plugin 菜单末尾 ——「创造为同名模式…」（输入包名 / GitHub / 本地路径）
+#   · 已装插件的详情页头部 ——「转为同名模式」
+# 点下去弹窗二选一：「直接安装」（全局常驻） 或 「创造为同名模式」（收进模式、用时再选）。
+#
+# 「创造为同名模式」的落地（Host 半身 index.js）：
+#   1. installBundle(spec, { enabled: false }) —— 只装成依赖，不进 dsh.profile.bundles，
+#      因此插件不会在根平面加载，其它会话零占用；
+#   2. 把 preset 声明写入 profile 的 cordis.patch.yml「托管区」（两行锚点注释之间），
+#      声明 preset-<slug> = @deepseek-ai/dsh-agent-preset，plugins 里挂一行
+#      { id, name: <刚装的包名> }；
+#   3. 重启宿主后，该模式出现在模式选择器里。
+#   托管状态存 <profile>/storages/dsh-plugin2preset/modes.json。
+#
+# 本行只是把 Host 半身插进来；Client 半身由 package.json 的 dsh.client 自动装配。
+- insert:
+    - id: plugin2preset
+      name: 'dsh-plugin2preset'

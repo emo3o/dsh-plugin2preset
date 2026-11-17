@@ -1,0 +1,50 @@
+{
+  "name": "dsh-plugin2preset",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DSH plugin that fixes a real annoyance: heavy feature plugins (e.g. dsh-rea) still inject their tools and schemas into EVERY session even when you never use them there, silently eating context. This plugin installs such a plugin as a same-named agent preset (mode) instead, so its tools load only in sessions where you actually pick that mode — other sessions stay lean. 把特定功能插件装成同名模式，用时才在具备所需能力的会话里选择，其余会话零上下文占用。",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "agent-preset",
+    "mode",
+    "plugin-manager"
+  ],
+  "license": "MIT",
+  "author": "emo3o",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emo3o/dsh-plugin2preset.git"
+  },
+  "homepage": "https://github.com/emo3o/dsh-plugin2preset#readme",
+  "bugs": {
+    "url": "https://github.com/emo3o/dsh-plugin2preset/issues"
+  },
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}

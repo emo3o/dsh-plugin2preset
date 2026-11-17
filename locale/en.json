@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Plugin as mode",
+    "description": "Installs a heavy feature plugin (e.g. dsh-rea) as a same-named agent preset (mode) instead of a global bundle: its tools and schemas load only in sessions where you pick that mode, so other sessions stay lean. Fixes the problem where a rarely-used plugin still eats context in every session."
+  }
+}
